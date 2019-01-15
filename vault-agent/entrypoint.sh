@@ -1,5 +1,6 @@
 #!/bin/sh
 export VAULT_AGENT_CONFIG_DIR=${VAULT_AGENT_CONFIG_DIR:-.}
+export VAULT_TOKEN_FILE=${VAULT_TOKEN_FILE:-"~/.vault-token"}
 cd "${VAULT_AGENT_CONFIG_DIR}"
 
 cat << EOF > config.hcl
@@ -17,7 +18,7 @@ auto_auth {
 
         sink "file" {
                 config = {
-                        path = "~/.vault-token"
+                        path = "${VAULT_TOKEN_FILE}"
                 }
         }
 }
@@ -30,3 +31,5 @@ EOF
 cat << EOF > ${VAULT_AGENT_CONFIG_DIR}/secret_id
 ${VAULT_SECRET_ID}
 EOF
+
+exit 0
