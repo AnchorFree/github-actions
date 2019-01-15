@@ -3,8 +3,9 @@ export VAULT_AGENT_CONFIG_DIR=${VAULT_AGENT_CONFIG_DIR:-.}
 export VAULT_TOKEN_FILE=${VAULT_TOKEN_FILE:-"~/.vault-token"}
 cd "${VAULT_AGENT_CONFIG_DIR}"
 
-cat << EOF > config.hcl
+cat << EOF > ${VAULT_AGENT_CONFIG_DIR}/config.hcl
 pid_file = "${VAULT_AGENT_CONFIG_DIR}/vault-agent.pidfile"
+exit_after_auth = true
 
 auto_auth {
         method "approle" {
@@ -32,4 +33,4 @@ cat << EOF > ${VAULT_AGENT_CONFIG_DIR}/secret_id
 ${VAULT_SECRET_ID}
 EOF
 
-exit 0
+vault agent -config ${VAULT_AGENT_CONFIG_DIR}/config.hcl
