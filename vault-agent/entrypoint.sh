@@ -20,7 +20,7 @@ auto_auth {
         sink "file" {
                 config = {
                         path = "${VAULT_TOKEN_FILE}"
-			mode = "644"
+			mode = 0644
                 }
         }
 }
